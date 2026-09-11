@@ -10,10 +10,6 @@
 - UPDATE the main page to include the new components. OTHERWISE, the user can NOT see any components!
 - ALWAYS try to use the shadcn/ui library.
 - Tailwind CSS: always use Tailwind CSS for styling components. Utilize Tailwind classes extensively for layout, spacing, colors, and other design aspects.
-- Use local state or a simple mock database for data storage (no real Supabase yet)
-- Use lucide-react for icons
-- Build a clickable prototype with navigation between screens
-- Implement the human-in-the-loop state logic where the agent's actions are required to progress transactions
 
 Available packages and libraries:
 
