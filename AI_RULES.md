@@ -17,3 +17,13 @@ Available packages and libraries:
 - You ALREADY have ALL the shadcn/ui components and their dependencies installed. So you don't need to install them again.
 - You have ALL the necessary Radix UI components installed.
 - Use prebuilt components from the shadcn/ui library after importing them. Note that these files shouldn't be edited, so make new components if you need to change them.
+
+# Trust Escrow Marketplace Specific Rules
+
+- Primary color: #FF6B35 (warm orange for trust and community)
+- Design must be warm, approachable, and community-focused
+- Mobile-first design for buyer/seller flows
+- Desktop layout for agent dashboard
+- High contrast, large buttons, clear icons for low-literacy users
+- Avoid technical jargon on user-facing screens
+- Use simple, clear language suitable for informal markets
