@@ -1,14 +1,23 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ShoppingBag, Clock, MapPin, MessageCircle, Phone } from "lucide-react";
-import { transactions } from "@/lib/mockData";
-import { formatNaira } from "@/lib/mockData";
+import { useApp } from "@/context/AppContext";
+import { formatNaira, transactions } from "@/lib/mockData";
+import { ArrowLeft, ShoppingBag, MapPin, MessageCircle, Phone } from "lucide-react";
 
 const ProductView = () => {
   const navigate = useNavigate();
+  const { updateTransaction } = useApp();
   const transaction = transactions[0];
+
+  const handlePayIntoEscrow = () => {
+    updateTransaction(transaction.id, {
+      status: "payment_confirmed",
+      escrowLocked: true,
+    });
+    navigate("/buyer/order-summary");
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -62,8 +71,8 @@ const ProductView = () => {
               <p className="text-gray-600 text-lg">{transaction.itemDescription}</p>
             </div>
 
-            <div className="flex items-center gap-4">
-              <Badge className="bg-orange-100 text-orange-800">Lace</Badge>
+            <div className="flex items-center gap-4 flex-wrap">
+              <Badge className="bg-orange-100 text-orange-800">{transaction.itemName.split(" ")[0]}</Badge>
               <div className="flex items-center gap-2 text-gray-600">
                 <MapPin className="h-4 w-4" />
                 <span>{transaction.location}</span>
@@ -110,12 +119,12 @@ const ProductView = () => {
               </CardContent>
             </Card>
 
-            <div className="flex gap-4">
+            <div className="flex gap-4 flex-wrap">
               <Button
                 className="flex-1 bg-orange-500 hover:bg-orange-600 text-white"
-                onClick={() => navigate("/buyer/order-summary")}
+                onClick={handlePayIntoEscrow}
               >
-                Continue to Order
+                Pay into Escrow
               </Button>
               <Button variant="outline" className="flex items-center gap-2">
                 <MessageCircle className="h-4 w-4" />

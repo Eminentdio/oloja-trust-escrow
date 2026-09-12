@@ -1,119 +1,142 @@
-export type UserRole = "buyer" | "seller" | "agent";
+import { Transaction, User } from "@/types/transaction";
 
-export type TransactionStatus =
-  | "pending-payment"
-  | "payment-confirmed"
-  | "in-transit"
-  | "delivered";
+export const formatNaira = (amount: number): string => {
+  return new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+    minimumFractionDigits: 0,
+  }).format(amount);
+};
 
-export interface Transaction {
-  id: string;
-  reference: string;
-  buyerName: string;
-  sellerName: string;
-  itemName: string;
-  itemDescription: string;
-  itemImage: string;
-  itemPrice: number;
-  deliveryFee: number;
-  totalAmount: number;
-  status: TransactionStatus;
-  createdAt: string;
-  location: string;
-  notes: string;
-}
-
-export const transactions: Transaction[] = [
+export const users: User[] = [
   {
-    id: "TXN-001",
-    reference: "TM-2847",
-    buyerName: "Tunde in London",
-    sellerName: "Mama Bose",
-    itemName: "Lace",
-    itemDescription: "Premium Ankara lace fabric for special occasions",
-    itemImage: "/placeholder.svg",
-    itemPrice: 150000,
-    deliveryFee: 25000,
-    totalAmount: 175000,
-    status: "pending-payment",
-    createdAt: "2024-01-15",
-    location: "Balogun Market, Lagos",
-    notes: "Buyer prefers voice confirmation for delivery updates",
+    id: "buyer-1",
+    name: "Tunde",
+    location: "London, UK",
+    role: "buyer",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=tunde",
   },
   {
-    id: "TXN-002",
-    reference: "TM-2851",
-    buyerName: "Aisha in Abuja",
-    sellerName: "Uncle Chidi",
-    itemName: "Gold Watch",
-    itemDescription: "Classic wristwatch with leather strap",
-    itemImage: "/placeholder.svg",
-    itemPrice: 320000,
-    deliveryFee: 15000,
-    totalAmount: 335000,
-    status: "payment-confirmed",
-    createdAt: "2024-01-14",
-    location: "Bodija Market, Ibadan",
-    notes: "Seller confirmed pickup with photo",
+    id: "seller-1",
+    name: "Mama Bose",
+    location: "Balogun, Lagos",
+    role: "seller",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=bose",
   },
   {
-    id: "TXN-003",
-    reference: "TM-2855",
-    buyerName: "Kemi in Toronto",
-    sellerName: "Mallam Sani",
-    itemName: "Leather Bag",
-    itemDescription: "Handmade leather tote bag",
-    itemImage: "/placeholder.svg",
-    itemPrice: 85000,
-    deliveryFee: 20000,
-    totalAmount: 105000,
-    status: "in-transit",
-    createdAt: "2024-01-13",
-    location: "Kura Market, Kano",
-    notes: "Delivery in progress to buyer address",
-  },
-  {
-    id: "TXN-004",
-    reference: "TM-2860",
-    buyerName: "Ngozi in Houston",
-    sellerName: "Auntie Funmi",
-    itemName: "Beads Set",
-    itemDescription: "Traditional coral beads set",
-    itemImage: "/placeholder.svg",
-    itemPrice: 240000,
-    deliveryFee: 30000,
-    totalAmount: 270000,
-    status: "delivered",
-    createdAt: "2024-01-12",
-    location: "Ariaria Market, Aba",
-    notes: "Delivered and confirmed by buyer",
+    id: "agent-1",
+    name: "Agent Chidi",
+    location: "Back Office",
+    role: "agent",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=chidi",
   },
 ];
 
-export const formatNaira = (amount: number): string => {
-  return `₦${amount.toLocaleString("en-NG")}`;
+export const transactions: Transaction[] = [
+  {
+    id: "TM-2847",
+    buyerId: "buyer-1",
+    sellerId: "seller-1",
+    itemName: "Ankara Lace Fabric",
+    itemDescription: "High-quality Ankara lace, 6 yards",
+    itemPrice: 150000,
+    deliveryFee: 25000,
+    totalAmount: 175000,
+    status: "pending_payment",
+    buyerName: "Tunde",
+    sellerName: "Mama Bose",
+    location: "Balogun, Lagos",
+    itemImage: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=400&h=400&fit=crop",
+    createdAt: new Date("2024-01-15T10:00:00"),
+    updatedAt: new Date("2024-01-15T10:00:00"),
+    paymentReference: "TM-2847",
+    escrowLocked: false,
+    logisticsConfirmed: false,
+    deliveryPhoto: null,
+    buyerConfirmed: false,
+    disputeFlagged: false,
+  },
+  {
+    id: "TM-2848",
+    buyerId: "buyer-1",
+    sellerId: "seller-1",
+    itemName: "Pure Water Pack",
+    itemDescription: "Bulk pure water, 24 bottles",
+    itemPrice: 80000,
+    deliveryFee: 15000,
+    totalAmount: 95000,
+    status: "payment_confirmed",
+    buyerName: "Tunde",
+    sellerName: "Mama Bose",
+    location: "Bodija, Ibadan",
+    itemImage: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=400&h=400&fit=crop",
+    createdAt: new Date("2024-01-14T14:30:00"),
+    updatedAt: new Date("2024-01-15T09:00:00"),
+    paymentReference: "TM-2848",
+    escrowLocked: true,
+    logisticsConfirmed: false,
+    deliveryPhoto: null,
+    buyerConfirmed: false,
+    disputeFlagged: false,
+  },
+  {
+    id: "TM-2849",
+    buyerId: "buyer-1",
+    sellerId: "seller-1",
+    itemName: "Used Electronics",
+    itemDescription: "Laptop and phone accessories",
+    itemPrice: 200000,
+    deliveryFee: 30000,
+    totalAmount: 230000,
+    status: "in_transit",
+    buyerName: "Tunde",
+    sellerName: "Mama Bose",
+    location: "Balogun, Lagos",
+    itemImage: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=400&fit=crop",
+    createdAt: new Date("2024-01-13T08:00:00"),
+    updatedAt: new Date("2024-01-15T11:00:00"),
+    paymentReference: "TM-2849",
+    escrowLocked: true,
+    logisticsConfirmed: true,
+    deliveryPhoto: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=400&h=400&fit=crop",
+    buyerConfirmed: false,
+    disputeFlagged: false,
+  },
+  {
+    id: "TM-2850",
+    buyerId: "buyer-1",
+    sellerId: "seller-1",
+    itemName: "Fabric Bundle",
+    itemDescription: "Mixed fabric for dressmaking",
+    itemPrice: 120000,
+    deliveryFee: 20000,
+    totalAmount: 140000,
+    status: "delivered",
+    buyerName: "Tunde",
+    sellerName: "Mama Bose",
+    location: "Bodija, Ibadan",
+    itemImage: "https://images.unsplash.com/photo-1544441893-675973e31985?w=400&h=400&fit=crop",
+    createdAt: new Date("2024-01-10T12:00:00"),
+    updatedAt: new Date("2024-01-14T16:00:00"),
+    paymentReference: "TM-2850",
+    escrowLocked: true,
+    logisticsConfirmed: true,
+    deliveryPhoto: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=400&h=400&fit=crop",
+    buyerConfirmed: true,
+    disputeFlagged: false,
+  },
+];
+
+export const statusLabels: Record<Transaction["status"], string> = {
+  pending_payment: "Pending Payment",
+  payment_confirmed: "Payment Confirmed",
+  in_transit: "In Transit",
+  delivered: "Delivered",
 };
 
-export const getStatusLabel = (status: TransactionStatus): string => {
-  switch (status) {
-    case "pending-payment":
-      return "Pending Payment";
-    case "payment-confirmed":
-      return "Payment Confirmed";
-    case "in-transit":
-      return "In Transit";
-    case "delivered":
-      return "Delivered";
-  }
-};
-
-export const getRoleLabel = (role: UserRole): string => {
-  switch (role) {
-    case "buyer":
-      return "Buyer";
-    case "seller":
-      return "Seller";
-    case "agent":
-      return "Agent";
-  }
+export const statusColors: Record<Transaction["status"], string> = {
+  pending_payment: "bg-yellow-100 text-yellow-800",
+  payment_confirmed: "bg-blue-100 text-blue-800",
+  in_transit: "bg-purple-100 text-purple-800",
+  delivered: "bg-green-100 text-green-800",
 };
